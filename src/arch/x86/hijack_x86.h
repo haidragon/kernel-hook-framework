@@ -1,12 +1,12 @@
-#ifndef _HOOK_X86_64_H_
-#define _HOOK_X86_64_H_
+#ifndef _HOOK_X86_H_
+#define _HOOK_X86_H_
 
 #define HOOK_FUNC_TEMPLATE(s)  \
 extern void hook_##s##_template(void);  \
 asm (  \
     ".globl hook_"#s"_template\n\t"  \
     "hook_"#s"_template:\n\t"  \
-    "pop %rax\n\t" \
+    "pop %eax\n\t" \
     "jmp hook_"#s"\n\t"  \
   \
     ".globl "#s"_code_space\n\t"  \
@@ -15,11 +15,7 @@ asm (  \
     ".long 0\n\t"  \
     ".long 0\n\t"  \
     ".long 0\n\t"  \
-    ".long 0\n\t"  \
-    ".long 0\n\t"  \
   \
-    ".long 0\n\t"  \
-    ".long 0\n\t"  \
     ".long 0\n\t"  \
     ".long 0\n\t"  \
     ".long 0\n\t"  \
@@ -40,10 +36,10 @@ asm (  \
     codespace;  \
 })
 
-#define HIJACK_SIZE 24
-#define LONG_JMP_CODE_LEN 14
+#define HIJACK_SIZE 16
+#define LONG_JMP_CODE_LEN 9
 int fill_nop_for_target(void *, void *);
 int fill_nop_for_code_space(void *, void *);
 #define init_arch_write_map_page(x) (0)
-#define MAX_INSTRUCTIONS 20
+#define MAX_INSTRUCTIONS 10
 #endif
